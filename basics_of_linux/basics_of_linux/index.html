@@ -346,7 +346,7 @@ The next three letters are for read, <code>w</code> for write and <code>x</code>
 <code>-u</code> stands for all processes by all users<br />
 <code>-x</code> stands for all processes that don't run a <code>tty</code></p>
 <p>If you run this command you will probably see a pretty big output. In the column for <strong>command</strong> you will see what command has been run. Every process has a Process Identification Number (<strong>PID</strong>). Something you will also see in the output.</p>
-<p>All of theses processes can actually be found in <code>/proc</code>. You just go to <code>/proc/[pid]</code>. In <code>/proc</code> you can find information about the system, and you can actually change the system if you change those files! But more on that later. What I wanted to explain is that if we look at the output from <code>ps</code> we see that some commands are in brackets. Like this:</p>
+<p>All of these processes can actually be found in <code>/proc</code>. You just go to <code>/proc/[pid]</code>. In <code>/proc</code> you can find information about the system, and you can actually change the system if you change those files! But more on that later. What I wanted to explain is that if we look at the output from <code>ps</code> we see that some commands are in brackets. Like this:</p>
 <pre><code>root        10  0.0  0.0      0     0 ?        S    ene14   0:00 [watchdog/0]
 root        11  0.0  0.0      0     0 ?        S    ene14   0:00 [watchdog/1]
 root        12  0.0  0.0      0     0 ?        S    ene14   0:00 [migration/1]
@@ -680,7 +680,7 @@ systemctl enable apache2
 <p>The Linux Kernel is a monolithic kernel, unlike the OSX and the Windows kernels which are hybrid.</p>
 <p>You can find the kernel file in <code>/boot</code>. It might look like something like this<code>vmlinuz-4.4.0-57-generic</code>. In the beginning of time the kernel was simply called <code>linux</code>. But when Virtual Memory was introduced they changed the name to <code>vmlinux</code> to reflect that the kernel could handle virtual memory. When the kernel later became too big it was compressed using zlib , therefore the name was changed to <code>vmlinuz</code>.</p>
 <p>The Linux Kernel differs from Windows in that it contains drivers by default. So you don't have to go around looking for drivers like you do on windows when you want to install a printer, or something like that.</p>
-<p>It is really easy to upgrade to the latest Linux kernel, all you have to do tis this:</p>
+<p>It is really easy to upgrade to the latest Linux kernel, all you have to do is this:</p>
 <pre><code class="bash">sudo apt-get update &amp;&amp; sudo apt-get dist-upgrade
 # or
 sudo apt-get update &amp;&amp; sudo apt-get upgrade
