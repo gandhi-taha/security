@@ -1,12 +1,21 @@
-# site_name: 'My notes'
-site_description: Stuff I don't feel like googeling again
-site_author: gandhi-taha
+site_name: Security notes
+site_description: Taha Gandhi's security notes - web, Active Directory, cloud, Kubernetes and AI/LLM security
+site_author: Taha Gandhi
+site_url: https://gandhi-taha.github.io/security/
+repo_url: https://github.com/gandhi-taha/security
+repo_name: gandhi-taha/security
+edit_uri: edit/master/docs/
+copyright: Taha Gandhi &middot; <a href="https://gandhi-taha.github.io/">gandhi-taha.github.io</a>
 
-repo_url: https://github.com/gandhi-taha
-
-site_name: Notes
 nav:
-- index.md
+- Home: index.md
+- AI and LLM Security:
+    - 'Overview': 'ai_security/index.md'
+    - 'OWASP Top 10 for LLM Apps': 'ai_security/owasp_llm_top_10.md'
+    - 'Prompt Injection': 'ai_security/prompt_injection.md'
+    - 'Agents and MCP': 'ai_security/agents_and_mcp.md'
+    - 'LLM Gateway Pattern': 'ai_security/llm_gateway.md'
+    - 'AI Governance for Security People': 'ai_security/ai_governance.md'
 - Basics of Linux:
     - 'Linux': 'basics_of_linux/linux.md'
     - 'Basics of Linux': 'basics_of_linux/basics_of_linux.md'
@@ -197,19 +206,60 @@ nav:
     - 'Webshells': 'tools/webshell.md'
     - 'GDB': 'tools/gdb.md'
 
-
 theme:
-  name: null
-  custom_dir: mkdocs_windmill
-  # Copy settings from mkdocs_theme.yml, which is ignored by custom_dir themes.
-  static_templates: [404.html]
-  search_index_only: true
-  include_search_page: true
+  name: material
+  language: en
+  favicon: assets/favicon.svg
+  logo: assets/favicon.svg
+  font:
+    text: Inter
+    code: JetBrains Mono
+  palette:
+    scheme: default
+    primary: custom
+    accent: custom
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - toc.follow
+
+extra_css:
+  - stylesheets/extra.css
+
+plugins:
+  - search
 
 markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - def_list
   - toc:
-      permalink: '#'
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.tasklist:
+      custom_checkbox: true
 
 extra:
-  history_buttons: true
-  version: v1.0.0
+  social:
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/t4gandhi
+    - icon: fontawesome/brands/github
+      link: https://github.com/gandhi-taha
+    - icon: fontawesome/solid/house
+      link: https://gandhi-taha.github.io/
+  generator: false
