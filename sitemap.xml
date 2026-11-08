@@ -1,773 +1,639 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/ai_security/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/ai_security/agents_and_mcp/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/ai_security/ai_governance/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/ai_security/llm_gateway/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/ai_security/owasp_llm_top_10/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/ai_security/prompt_injection/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/attacking_windows_domain_domain_trust/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/attacking_windows_domain_local_privilege_escalation/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/domain_privilege_escalation_checklist/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/abusing_constrained_delegation/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/abusing_unconstrained_delegation/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/aseproasting/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/check_for_insecure_usage_of_high_privileged_accounts/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/check_for_local_admin_privileges/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/check_for_lockout_threshold/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/check_for_misconfgured_access_control_of_mssql/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/check_for_misconfigured_gpo/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/check_for_misconfigured_laps/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/check_for_reuse_of_local_admin_password/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/check_for_scripts_on_sysvol/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/check_for_unsupported_os/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/check_for_writable_executables_on_shares/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/credential_extraction/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/execssive_amount_of_domain_admins/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/incorrectly_configured_forest_or_domain_trust/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/kerberoasting/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/misconfigured_access_control_lists/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/misconfigured_read_only_domain_controller/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/ntlm_relaying_and_theft/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/passwords_in_active_directory_attributes/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/passwords_in_group_policy_preferences/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/smb_shares_mining/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/active_directory_privilege_escalation/template/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/cracking_hashes/cracking_hashes/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/cracking_hashes/generate_password_list/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/good_to_know/active_directory_help_commands/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/good_to_know/ldap_syntax/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/good_to_know/neo4j_and_cypher/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/good_to_know/tools/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/good_to_know/transferring_files/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/good_to_know/windows_access_control/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/initial_access/llmnr_and_nbtns_poisoning/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/initial_access/mitm6/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/initial_access/password_spraying/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/initial_access/wpad_spoofing/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/local_privilege_escalation/local_privilege_escalation/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/local_privilege_escalation/shutdown_windows_defender/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/powershell/activedirectory/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/powershell/amsi_bypass/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/powershell/basics_of_powershell/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/powershell/jit_csharp_compilation/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/powershell/local_machine_recon/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/powershell/networking/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/powershell/running_program_as_user_without_guiinteraction/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/recon/active_directory_recon/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/remote_access/remote_access/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/understanding_active_directory/about_active_directory/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/understanding_active_directory/ad_physical_topology/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/understanding_active_directory/default_groups/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/understanding_active_directory/domain_controller/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/understanding_active_directory/group_policies/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_active_directory_domain/understanding_active_directory/kerberos/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_cloud_environment/attacking_azure/abuse_application_administrator_role/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_cloud_environment/attacking_azure/abuse_azure_ad_sso/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_cloud_environment/attacking_azure/check_for_blobs/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_cloud_environment/attacking_azure/check_for_misconfigured_azuread_groups/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_cloud_environment/attacking_azure/check_for_passwords_azure/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_cloud_environment/attacking_azure/check_for_sso_enabled_services/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_cloud_environment/attacking_azure/password_hash_syncronization/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_cloud_environment/attacking_azure/password_spraying/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_cloud_environment/attacking_azure/passwords_in_active_directory_attribute/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_cloud_environment/attacking_azure/recon/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_external_network/attacking_external_networks/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_internal_network/active_information_gathering/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_internal_network/arp-spoofing/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_internal_network/basics_of_networking/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_internal_network/dns_zone_transfer_attack/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_internal_network/infrastructure_pentest_scanning_networks/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_internal_network/list_of_common_ports/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_internal_network/network_attacks/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_kubernetes/attacking_kubernetes/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_kubernetes/attacking_kubernetes_checklist/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_kubernetes/basics_of_docker/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_kubernetes/basics_of_kubernetes/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_kubernetes/kubernetes_hacking_tools/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_mobile_applications/android/android_tools/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_mobile_applications/android/android_vuln_checklist/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_mobile_applications/android/mobile_application_setup/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_mobile_applications/android/mobile_application_vulnerabilities_android/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_mobile_applications/ios/ios_application_vulnerabilities/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_mobile_applications/ios/ios_setup/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_mobile_applications/ios/ios_vuln_checklist/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_rfid_cards/basics_of_rfid_hacking/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_thick_client/attacking_thick_client/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/bankid_attacks/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/bypass_image_upload/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/cache_poisoning/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/cross-site-scripting/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/cross_site_request_forgery/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/cross_site_web_socket_hijack/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/csv_injection/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/deserialization_attacks/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/dom_based_xss/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/host-header-attack/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/local_file_inclusion/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/nosql-injections/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/oauth_attacks/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/remote_file_inclusion/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/session-fixation/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/sql-injections/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/static_analysis_of_javascript/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/subdomain_takeover/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/web-scanning/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_web_applications/xml_external_entity_attack/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_wifi/wifi/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/attacking_wifi/wifi_network_segmentation/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/basic_hardening/hardening_bios/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/basic_hardening/hardening_linux/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/basics_of_linux/bash_scripting/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/basics_of_linux/basics_of_linux/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/basics_of_linux/common_devices_and_components/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/basics_of_linux/linux/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/basics_of_linux/vim/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/basics_of_windows/basics_of_windows/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/basics_of_windows/cmd/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/basics_of_windows/default_windows_files/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/basics_of_windows/powershell/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/basics_of_windows/powershell_scripting2/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/cryptography/client_certificate_tests/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/initial_access/initial_access/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/initial_access/initial_access_dropper/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/initial_access/phishing_server/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/initial_access/reverse_shell/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/initial_access/social_engineering_-_phishing/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/password_cracking/generate_custom_wordlist/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/password_cracking/generate_password_list/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/password_cracking/offline_password_cracking/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/password_cracking/online_password_cracking/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/physical_attacks/physical_access_to_machine/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/post_exploitation/getting_meterpreter_shell/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/post_exploitation/privilege_escalation_-_linux/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/post_exploitation/spawning_shells/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/python/python_fundamentals/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/python/useful_python_commands/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/random_tips_and_tricks/general_tips/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/random_tips_and_tricks/pivoting/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/random_tips_and_tricks/port_forwarding_and_tunneling/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/random_tips_and_tricks/port_knocking/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/random_tips_and_tricks/setuid_c-code/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/recon/finding_subdomains/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/recon/google_hacking/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/recon/passive_information_gathering/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-     <loc>None</loc>
-     <lastmod>2020-12-17</lastmod>
-     <changefreq>daily</changefreq>
+         <loc>https://gandhi-taha.github.io/security/recon/port_scanning/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://gandhi-taha.github.io/security/tools/gdb/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://gandhi-taha.github.io/security/tools/webshell/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://gandhi-taha.github.io/security/tools/wget/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://gandhi-taha.github.io/security/tools/wireshark/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://gandhi-taha.github.io/security/transferring_files/transfering_files/</loc>
+         <lastmod>2026-11-08</lastmod>
     </url>
 </urlset>

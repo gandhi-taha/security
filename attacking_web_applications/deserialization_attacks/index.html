@@ -1,146 +1,5664 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  
-  
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <meta name="author" content="gandhi-taha">
-    
-    <link rel="shortcut icon" href="../../img/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>Deserialization Attacks - Notes</title>
-    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
-    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
-    <link href="../../css/base.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../css/highlight.css">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
 
-    <script src="../../js/jquery-3.2.1.min.js"></script>
-    <script src="../../js/bootstrap-3.3.7.min.js"></script>
-    <script src="../../js/highlight.pack.js"></script>
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
     
-    <base target="_top">
-    <script>
-      var base_url = '../..';
-      var is_top_frame = false;
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Taha Gandhi's security notes - web, Active Directory, cloud, Kubernetes and AI/LLM security">
+      
+      
+        <meta name="author" content="Taha Gandhi">
+      
+      
+        <link rel="canonical" href="https://gandhi-taha.github.io/security/attacking_web_applications/deserialization_attacks/">
+      
+      
+        <link rel="prev" href="../cross_site_web_socket_hijack/">
+      
+      
+        <link rel="next" href="../dom_based_xss/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.39">
+    
+    
+      
+        <title>Deserialization Attacks - Security notes</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.8c3ca2c6.min.css">
+      
         
-        var pageToc = [
-          {title: "Java deserialization attacks", url: "#_top", children: [
-              {title: "Identify", url: "#identify" },
-              {title: "Exploit", url: "#exploit" },
-          ]},
-          {title: "PHP deserialization attacks", url: "#php-deserialization-attacks", children: [
-              {title: "Magic methods", url: "#magic-methods" },
-              {title: "Exploit", url: "#exploit_1" },
-          ]},
-        ];
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
 
-    </script>
-    <script src="../../js/base.js"></script> 
-</head>
-
-<body>
-<script>
-if (is_top_frame) { $('body').addClass('wm-top-page'); }
-</script>
-
-
-
-<div class="container-fluid wm-page-content">
-  <a name="_top"></a>
-    
 
     
     
       
     
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
 
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
     
-    <div class="wm-article-nav pull-right">
-      <a href="../dom_based_xss/" class="btn btn-xs btn-default pull-right">
-        Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../dom_based_xss/" class="btn btn-xs btn-link">
-        DOM XSS
-      </a>
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#java-deserialization-attacks" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
     </div>
     
-    <div class="wm-article-nav">
-      <a href="../cross_site_web_socket_hijack/" class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../cross_site_web_socket_hijack/" class="btn btn-xs btn-link">
-        Cross-Site Web Socket Hijack (CSHSH)
-      </a>
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Security notes" class="md-header__button md-logo" aria-label="Security notes" data-md-component="logo">
+      
+  <img src="../../assets/favicon.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Security notes
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Deserialization Attacks
+            
+          </span>
+        </div>
+      </div>
     </div>
     
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/gandhi-taha/security" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    gandhi-taha/security
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Security notes" class="md-nav__button md-logo" aria-label="Security notes" data-md-component="logo">
+      
+  <img src="../../assets/favicon.svg" alt="logo">
+
+    </a>
+    Security notes
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/gandhi-taha/security" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    gandhi-taha/security
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
 
     
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    AI and LLM Security
+  </span>
+  
 
-    <p>Serialization (aka marshaling) = process of converting programming object to string.</p>
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            AI and LLM Security
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai_security/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai_security/owasp_llm_top_10/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OWASP Top 10 for LLM Apps
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai_security/prompt_injection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Prompt Injection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai_security/agents_and_mcp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Agents and MCP
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai_security/llm_gateway/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LLM Gateway Pattern
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ai_security/ai_governance/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AI Governance for Security People
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Basics of Linux
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Basics of Linux
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics_of_linux/linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics_of_linux/basics_of_linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Basics of Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics_of_linux/bash_scripting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bash Scripting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics_of_linux/vim/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vim
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics_of_linux/common_devices_and_components/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Common Devices and Components
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Basics of Windows
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Basics of Windows
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics_of_windows/basics_of_windows/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Basics of Windows
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics_of_windows/powershell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Powershell
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics_of_windows/powershell_scripting2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Powershell Scripting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics_of_windows/cmd/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CMD
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basics_of_windows/default_windows_files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Default Windows Files
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Python
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Python
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/python_fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Python Fundamentals
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../python/useful_python_commands/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Useful Scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Basic Hardening
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Basic Hardening
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic_hardening/hardening_bios/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hardening Bios
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../basic_hardening/hardening_linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hardening Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Recon
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Recon
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../recon/google_hacking/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Google Hacking
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../recon/passive_information_gathering/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Passive Information Gathering
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../recon/port_scanning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Port Scanning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../recon/finding_subdomains/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Finding Subdomains
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Initial Access
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Initial Access
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../initial_access/phishing_server/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setting Up Email-phishing-server
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../initial_access/social_engineering_-_phishing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Social Engineering and Phishing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../initial_access/initial_access/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Initial Access
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../initial_access/initial_access_dropper/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Initial Dropper
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../initial_access/reverse_shell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generate Payload - Reverse shells
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Post Exploitation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Post Exploitation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../post_exploitation/spawning_shells/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Spawning Shells
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../post_exploitation/getting_meterpreter_shell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Meterpreter for Post-exploitation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../post_exploitation/privilege_escalation_-_linux/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Local Privilege Escalation - Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Transferring Files
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            Transferring Files
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../transferring_files/transfering_files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transferring Files Linux
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_11" id="__nav_11_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Attacking Web Applications
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            Attacking Web Applications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../oauth_attacks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OAuth Attacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bankid_attacks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BankID Attacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cache_poisoning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cache Poisoning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../csv_injection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CSV Injection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cross_site_web_socket_hijack/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cross-Site Web Socket Hijack (CSHSH)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Deserialization Attacks
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Deserialization Attacks
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#java-deserialization-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Java deserialization attacks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Java deserialization attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#identify" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identify
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Identify">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#with-the-source-code-white-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      WIth the source code / white-box
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WIth the source code / white-box">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#entry-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entry point
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#without-source-code-black-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      Without source code / black box
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploit
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#php-deserialization-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      PHP deserialization attacks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PHP deserialization attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#magic-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Magic methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploit_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exploit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-find-unserialize" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1 - find unserialize
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-find-a-class-to-abuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2 - Find a class to abuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blackbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blackbox
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dom_based_xss/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DOM XSS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../local_file_inclusion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Local File Inclusion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../static_analysis_of_javascript/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Static Analysis of JavaScript
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sql-injections/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SQL Injections
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../xml_external_entity_attack/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    XML External Entity (XXE)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../subdomain_takeover/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Subdomain Takerovers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../session-fixation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Session Fixation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../remote_file_inclusion/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Remote File Inclusion
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../nosql-injections/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NoSQL Injection
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../host-header-attack/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Host-header Attacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../bypass_image_upload/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bypassing File Upload
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cross_site_request_forgery/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cross-site Request Forgery
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cross-site-scripting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cross-site Scripting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../web-scanning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Find Files
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <label class="md-nav__link" for="__nav_12" id="__nav_12_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Attacking Internal Network
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_12">
+            <span class="md-nav__icon md-icon"></span>
+            Attacking Internal Network
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_internal_network/network_attacks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Network Attacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_internal_network/dns_zone_transfer_attack/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zone Transfer Attack
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_internal_network/basics_of_networking/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Basics of Networking
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_internal_network/active_information_gathering/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Active Information Gathering
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_internal_network/arp-spoofing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    ARP Spoofing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_internal_network/infrastructure_pentest_scanning_networks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scanning Networks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_internal_network/list_of_common_ports/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Common Ports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <label class="md-nav__link" for="__nav_13" id="__nav_13_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Attacking External Network
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            Attacking External Network
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_external_network/attacking_external_networks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Attacking External Networks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_internal_network/list_of_common_ports/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    List of Common Ports
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_14" id="__nav_14_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Attacking Active Directory
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14">
+            <span class="md-nav__icon md-icon"></span>
+            Attacking Active Directory
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_1" id="__nav_14_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Active Directory - Good to Know
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_1">
+            <span class="md-nav__icon md-icon"></span>
+            Active Directory - Good to Know
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/good_to_know/active_directory_help_commands/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Helpful Commands and Scripts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/good_to_know/transferring_files/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Transferring Files
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/good_to_know/tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/good_to_know/neo4j_and_cypher/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Neo4J and Cypher
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/good_to_know/ldap_syntax/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LDAP Syntax
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/good_to_know/windows_access_control/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Windows Access Control
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_2" id="__nav_14_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Active Directory - Basics of Active Directory
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_2">
+            <span class="md-nav__icon md-icon"></span>
+            Active Directory - Basics of Active Directory
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/understanding_active_directory/about_active_directory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About Active Directory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/understanding_active_directory/domain_controller/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Domain Controller
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/understanding_active_directory/kerberos/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kerberos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/understanding_active_directory/group_policies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Group Policies
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/understanding_active_directory/ad_physical_topology/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AD Physical topology
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/understanding_active_directory/default_groups/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Default Groups
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_3" id="__nav_14_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Active Directory - Reconnaissance
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_3">
+            <span class="md-nav__icon md-icon"></span>
+            Active Directory - Reconnaissance
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/recon/active_directory_recon/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reconnaissance
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_4" id="__nav_14_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Active Directory - Initial Access
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_4">
+            <span class="md-nav__icon md-icon"></span>
+            Active Directory - Initial Access
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/initial_access/llmnr_and_nbtns_poisoning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LLMNR and NBT-NS Poisoning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/initial_access/password_spraying/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Password Spraying
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/initial_access/mitm6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mitm6
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/initial_access/wpad_spoofing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    WPAD Spoofing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_5" id="__nav_14_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Active Directory - Local Privilege Escalation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_5">
+            <span class="md-nav__icon md-icon"></span>
+            Active Directory - Local Privilege Escalation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/local_privilege_escalation/local_privilege_escalation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Local Privilige Escalation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/local_privilege_escalation/shutdown_windows_defender/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Disable Windows Defender
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_6" id="__nav_14_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Active Directory - Domain Privilege Escalation
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_6">
+            <span class="md-nav__icon md-icon"></span>
+            Active Directory - Domain Privilege Escalation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/abusing_constrained_delegation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Abusing Constrained Delegation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/abusing_unconstrained_delegation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Abusing Unconstrained Delegation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/check_for_insecure_usage_of_high_privileged_accounts/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check for Insecure Usage of High Privileged Accounts
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/check_for_local_admin_privileges/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check for Local Admin Privileges
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/check_for_misconfgured_access_control_of_mssql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check for Misconfgured Access Control of MSSQL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/check_for_misconfigured_gpo/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check for Misconfigured GPO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/check_for_reuse_of_local_admin_password/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check for Reuse of Local Admin Password
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/check_for_unsupported_os/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check for Unsupported OS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/kerberoasting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Kerberos TGS Service Ticket Cracking (Kerberoast)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/execssive_amount_of_domain_admins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Excessive Amount of Domain Admins
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/incorrectly_configured_forest_or_domain_trust/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Incorrectly Configured Forest or Domain Trust
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/misconfigured_access_control_lists/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Misconfigured Access Control Lists
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/passwords_in_active_directory_attributes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Passwords in Active Directory Attributes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/smb_shares_mining/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SMB Shares Mining
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/ntlm_relaying_and_theft/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    NTLM Relaying and Theft
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/credential_extraction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Credential Extraction (LSASS/SAM)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/check_for_lockout_threshold/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check for Lockout Policy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/check_for_scripts_on_sysvol/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check for Scripts in SYSVOL
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/check_for_writable_executables_on_shares/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check for Writable Executables in Shares
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/aseproasting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AS-REP roasting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/check_for_misconfigured_laps/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Misconfigured LAPS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/misconfigured_read_only_domain_controller/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Misconfigured RODC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/passwords_in_group_policy_preferences/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Password in GPO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/attacking_windows_domain_domain_trust/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Attacking Domain Trust
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/domain_privilege_escalation_checklist/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Domain Privilege Escalation Checklist
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/active_directory_privilege_escalation/template/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Template
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_7" id="__nav_14_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Active Directory - Remote Access
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_7">
+            <span class="md-nav__icon md-icon"></span>
+            Active Directory - Remote Access
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/remote_access/remote_access/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Remote Access
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_8" id="__nav_14_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Active Directory - Cracking Hashes
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_8">
+            <span class="md-nav__icon md-icon"></span>
+            Active Directory - Cracking Hashes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/cracking_hashes/cracking_hashes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cracking Hashes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/cracking_hashes/generate_password_list/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generate Password List
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_14_9" id="__nav_14_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Active Directory - Powershell
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_14_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_14_9">
+            <span class="md-nav__icon md-icon"></span>
+            Active Directory - Powershell
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/powershell/basics_of_powershell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Basics of Powershell
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/powershell/activedirectory/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Active Directory
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/powershell/jit_csharp_compilation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    JIT CSharp Compilation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/powershell/local_machine_recon/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Local Machine Recon
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/powershell/networking/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Networking
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/powershell/running_program_as_user_without_guiinteraction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Running Program as User Without GUI Interaction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/powershell/amsi_bypass/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AMSI Bypass
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_active_directory_domain/attacking_windows_domain_local_privilege_escalation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Local Privilige Escalation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <label class="md-nav__link" for="__nav_15" id="__nav_15_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Attacking Mobile Application
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15">
+            <span class="md-nav__icon md-icon"></span>
+            Attacking Mobile Application
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_15_1" id="__nav_15_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Android
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_15_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15_1">
+            <span class="md-nav__icon md-icon"></span>
+            Android
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_mobile_applications/android/mobile_application_setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Android Testing Environment Setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_mobile_applications/android/android_tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_mobile_applications/android/mobile_application_vulnerabilities_android/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vulnerabilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_mobile_applications/android/android_vuln_checklist/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Checklist
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_15_2" id="__nav_15_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    IOS
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_15_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_15_2">
+            <span class="md-nav__icon md-icon"></span>
+            IOS
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_mobile_applications/ios/ios_setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    IOS Testing Environment Setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_mobile_applications/ios/ios_application_vulnerabilities/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vulnerabilities
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_mobile_applications/ios/ios_vuln_checklist/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Vulnerabilities Checklist
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Attacking Wifi
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            Attacking Wifi
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_wifi/wifi_network_segmentation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Testing Network Segmentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_wifi/wifi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Testing Wifi Security
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_17" >
+        
+          
+          <label class="md-nav__link" for="__nav_17" id="__nav_17_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Attacking Thick Client
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_17_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_17">
+            <span class="md-nav__icon md-icon"></span>
+            Attacking Thick Client
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_thick_client/attacking_thick_client/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Attacking Thick Client
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18" >
+        
+          
+          <label class="md-nav__link" for="__nav_18" id="__nav_18_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Attacking Cloud Environment
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18">
+            <span class="md-nav__icon md-icon"></span>
+            Attacking Cloud Environment
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_18_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_18_1" id="__nav_18_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Azure
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_18_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_18_1">
+            <span class="md-nav__icon md-icon"></span>
+            Azure
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_cloud_environment/attacking_azure/abuse_application_administrator_role/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Abuse Application Administrator Role
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_cloud_environment/attacking_azure/abuse_azure_ad_sso/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Abuse Azure AD SSO
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_cloud_environment/attacking_azure/check_for_blobs/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check for Blobs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_cloud_environment/attacking_azure/check_for_misconfigured_azuread_groups/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check for Misconfigured AzureAD groups
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_cloud_environment/attacking_azure/check_for_passwords_azure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check for Passwords Azure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_cloud_environment/attacking_azure/check_for_sso_enabled_services/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Check for SSO Enabled Services
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_cloud_environment/attacking_azure/password_hash_syncronization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Password Hash Syncronization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_cloud_environment/attacking_azure/password_spraying/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Password Spraying
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_cloud_environment/attacking_azure/passwords_in_active_directory_attribute/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Password in Active Directory Attribute
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_cloud_environment/attacking_azure/recon/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Recon
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_19" >
+        
+          
+          <label class="md-nav__link" for="__nav_19" id="__nav_19_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Attacking Kubernetes
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_19_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_19">
+            <span class="md-nav__icon md-icon"></span>
+            Attacking Kubernetes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_kubernetes/basics_of_kubernetes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Basics of Kubernetes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_kubernetes/basics_of_docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Basics of Docker
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_kubernetes/kubernetes_hacking_tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setting Up Tools
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_kubernetes/attacking_kubernetes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Attacking Kubernetes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_kubernetes/attacking_kubernetes_checklist/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Attacking Kubernetes Checklist
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_20" >
+        
+          
+          <label class="md-nav__link" for="__nav_20" id="__nav_20_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Attacking RFID Cards
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_20_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_20">
+            <span class="md-nav__icon md-icon"></span>
+            Attacking RFID Cards
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../attacking_rfid_cards/basics_of_rfid_hacking/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Basics of RFID Hacking
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_21" >
+        
+          
+          <label class="md-nav__link" for="__nav_21" id="__nav_21_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Physical Attacks
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_21_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_21">
+            <span class="md-nav__icon md-icon"></span>
+            Physical Attacks
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../physical_attacks/physical_access_to_machine/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pysical Attacks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_22" >
+        
+          
+          <label class="md-nav__link" for="__nav_22" id="__nav_22_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Password Cracking
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_22_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_22">
+            <span class="md-nav__icon md-icon"></span>
+            Password Cracking
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../password_cracking/offline_password_cracking/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Offline Password Cracking
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../password_cracking/online_password_cracking/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Online Password Cracking (Brute force)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../password_cracking/generate_password_list/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generate Password List
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../password_cracking/generate_custom_wordlist/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Generate Custom Password List
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_23" >
+        
+          
+          <label class="md-nav__link" for="__nav_23" id="__nav_23_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Cryptography
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_23_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_23">
+            <span class="md-nav__icon md-icon"></span>
+            Cryptography
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cryptography/client_certificate_tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Client Certificate Tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_24" >
+        
+          
+          <label class="md-nav__link" for="__nav_24" id="__nav_24_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Random Tips and Tricks
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_24_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_24">
+            <span class="md-nav__icon md-icon"></span>
+            Random Tips and Tricks
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../random_tips_and_tricks/general_tips/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tips and Tricks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../random_tips_and_tricks/setuid_c-code/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setuid With C
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../random_tips_and_tricks/port_knocking/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Port Knocking
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../random_tips_and_tricks/port_forwarding_and_tunneling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Port Forwarding and Tunneling
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../random_tips_and_tricks/pivoting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pivoting
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_25" >
+        
+          
+          <label class="md-nav__link" for="__nav_25" id="__nav_25_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Tools
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_25_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_25">
+            <span class="md-nav__icon md-icon"></span>
+            Tools
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/wireshark/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Wireshark
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/wget/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Wget
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/webshell/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Webshells
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/gdb/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    GDB
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#java-deserialization-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Java deserialization attacks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Java deserialization attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#identify" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identify
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Identify">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#with-the-source-code-white-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      WIth the source code / white-box
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WIth the source code / white-box">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#entry-point" class="md-nav__link">
+    <span class="md-ellipsis">
+      Entry point
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#without-source-code-black-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      Without source code / black box
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploit
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#php-deserialization-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      PHP deserialization attacks
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PHP deserialization attacks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#magic-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Magic methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exploit_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Exploit
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Exploit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-find-unserialize" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 1 - find unserialize
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-find-a-class-to-abuse" class="md-nav__link">
+    <span class="md-ellipsis">
+      Step 2 - Find a class to abuse
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blackbox" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blackbox
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<p>Serialization (aka marshaling) = process of converting programming object to string.</p>
 <p>Deserialization (aka marshaling) = process of converting string to programming object</p>
 <p>Serialization is supported is many programming languages, like Java, Python, Ruby, Php.</p>
 <p>Burp Suite is looking for deserialized objects in its passive scan (you can see this if you go to scanning ooptions and look for "serialized objects in HTTP message". Exactly how it does this is unclear. I have seen it identify a PHP serialized object.</p>
 <p>Serialization is often times done in order to be able to send the object, over the network, for example. Or so that it can be stored.
 Both JSON and XML are example of serialized data.</p>
-<h2 id="java-deserialization-attacks">Java deserialization attacks<a class="headerlink" href="#java-deserialization-attacks" title="Permanent link">#</a></h2>
+<h2 id="java-deserialization-attacks">Java deserialization attacks<a class="headerlink" href="#java-deserialization-attacks" title="Permanent link">&para;</a></h2>
 <p>Anything can be serialized, it doesn't have to be an object. It can be a string, boolean, function, etc.
 The difficuly of exploiting deserialization bugs is that you can never introduce code. You will only be able to control the properties of already existing objects. That is why it is called POP-gadget, property-oriented-programming.
 This difficuly is in part overcome due to the fact that many applications load in libraries where useful classes exist. That is what ysoserial does. It just creates payloads that can be used if a specific library exists, and then you just test all of them. It is kind of a shot gun approach.</p>
 <p>So, unles you have access to the source code your best bet is probably to just use the shotgun approach and send in all ysoserial payloads, and hope that the application has included one of ysoserial third-party libraries.
 However, it should be noted that testing all payloads might lead to an unhandled exception and the application might crash. So there is always that risk involved.</p>
 <p>The ysoserial payloads are blind payloads, and not command output is returned. </p>
-<h3 id="identify">Identify<a class="headerlink" href="#identify" title="Permanent link">#</a></h3>
-<h4 id="with-the-source-code-white-box">WIth the source code / white-box<a class="headerlink" href="#with-the-source-code-white-box" title="Permanent link">#</a></h4>
+<h3 id="identify">Identify<a class="headerlink" href="#identify" title="Permanent link">&para;</a></h3>
+<h4 id="with-the-source-code-white-box">WIth the source code / white-box<a class="headerlink" href="#with-the-source-code-white-box" title="Permanent link">&para;</a></h4>
 <p>In source code:</p>
 <p>You can check the source code to find out if a vulnerable library is being used.</p>
 <p>The functions to serialize or unserialize in Java is</p>
 <p>Here is an example, where we serialize the string "name", and write the output to a file called file.bin.
 The function that actually serialize the object is <code>out.writeObject(name)</code></p>
-<pre><code class="Java">import java.io.*;
-
-public class Serial
-{
-    public static void main(String[] args)
-    {
-        String name = &quot;Nytro&quot;;
-        String filename = &quot;file.bin&quot;;
-
-        try
-        {
-            FileOutputStream file  = new FileOutputStream(filename);
-            ObjectOutputStream out = new ObjectOutputStream(file);
-
-            // Serialization of the &quot;name&quot; (String) object
-            // Will be written to &quot;file.bin&quot;
-
-            out.writeObject(name); //Here is the serialization. The serialized object is written to the file file.bin
-
-            out.close();
-            file.close();
-        }
-        catch(Exception e)
-        {
-            System.out.println(&quot;Exception: &quot; + e.toString());
-        }
-    }
-}
-
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.io.*</span><span class="p">;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Serial</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"Nytro"</span><span class="p">;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"file.bin"</span><span class="p">;</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">        </span><span class="k">try</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">            </span><span class="n">FileOutputStream</span><span class="w"> </span><span class="n">file</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FileOutputStream</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">            </span><span class="n">ObjectOutputStream</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ObjectOutputStream</span><span class="p">(</span><span class="n">file</span><span class="p">);</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">            </span><span class="c1">// Serialization of the "name" (String) object</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">            </span><span class="c1">// Will be written to "file.bin"</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">            </span><span class="n">out</span><span class="p">.</span><span class="na">writeObject</span><span class="p">(</span><span class="n">name</span><span class="p">);</span><span class="w"> </span><span class="c1">//Here is the serialization. The serialized object is written to the file file.bin</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">            </span><span class="n">out</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">            </span><span class="n">file</span><span class="p">.</span><span class="na">close</span><span class="p">();</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">        </span><span class="k">catch</span><span class="p">(</span><span class="n">Exception</span><span class="w"> </span><span class="n">e</span><span class="p">)</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Exception: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="p">}</span>
+</code></pre></div>
 <p>The result of the code is that the object is written to a file, if we look at the content of that file it shows us the following:</p>
-<pre><code>AC ED 00 05 74 00 05 4e 79 74 72 6f            ....t..Nytro
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>AC ED 00 05 74 00 05 4e 79 74 72 6f            ....t..Nytro
+</code></pre></div>
 <p>This is just like a a PHP serilaized object, but the "syntaxt" to read it is a bit more difficult, because it is binary and not only ASCII as in PHP.</p>
 <p>Data starts with the binary "AC ED" - this is the "magic number" that identifies serialized data, so all serialized data will start with this value
 Serialization protocol version "00 05"
@@ -150,53 +5668,48 @@ And, finally, our string</p>
 <p>For more documentation on the protocol on serialized objects see: https://docs.oracle.com/javase/7/docs/platform/serialization/spec/protocol.html</p>
 <p>So, how to we deserialize it again?</p>
 <p>Just as <code>writeObject()</code> serializes an object <code>readObject()</code> deserializes the object.</p>
-<pre><code>String name;
-String filename = &quot;file.bin&quot;;
-
-try
-{
-    FileInputStream file  = new FileInputStream(filename);
-    ObjectInputStream out = new ObjectInputStream(file);
-
-    // Serialization of the &quot;name&quot; (String) object
-    // Will be written to &quot;file.bin&quot;
-
-    name = (String)out.readObject();
-    System.out.println(name);
-
-    out.close();
-    file.close();
-}
-catch(Exception e)
-{
-    System.out.println(&quot;Exception: &quot; + e.toString());
-}
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>String name;
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>String filename = "file.bin";
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>try
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>{
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    FileInputStream file  = new FileInputStream(filename);
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    ObjectInputStream out = new ObjectInputStream(file);
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    // Serialization of the "name" (String) object
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    // Will be written to "file.bin"
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    name = (String)out.readObject();
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    System.out.println(name);
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    out.close();
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    file.close();
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>}
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>catch(Exception e)
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>{
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>    System.out.println("Exception: " + e.toString());
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>}
+</code></pre></div>
 <p>It is not only <code>readObject()</code> that is vulnerable. The following methods are some that also deserializes an object:</p>
-<pre><code>readResolve
-readExternal
-readUnshared
-XStream
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>readResolve
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>readExternal
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>readUnshared
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>XStream
+</code></pre></div>
 <p>So, in order to identify deserialization vulnerabilities we need to identify an entry point, and code snippets/objects that we can manipulate the properties of.</p>
-<h5 id="entry-point">Entry point<a class="headerlink" href="#entry-point" title="Permanent link">#</a></h5>
-<p>We can look for the usage of the following class:</p>
-<pre><code>java.io.ObjectInputStream
-</code></pre>
-
+<h5 id="entry-point">Entry point<a class="headerlink" href="#entry-point" title="Permanent link">&para;</a></h5>
+<p>We can look for the usage of the following class:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>java.io.ObjectInputStream
+</code></pre></div></p>
 <p>Or for classes that are serializeable and implekentn the readObject class.</p>
 <p>Serialized java objects always begin with <code>ac ed</code> in hex, and <code>r00</code> in base64 objects.</p>
-<h4 id="without-source-code-black-box">Without source code / black box<a class="headerlink" href="#without-source-code-black-box" title="Permanent link">#</a></h4>
+<h4 id="without-source-code-black-box">Without source code / black box<a class="headerlink" href="#without-source-code-black-box" title="Permanent link">&para;</a></h4>
 <p><code>ac ed</code> is the "magic number" for deserialized objects.
 Check the POST body or other areas for the base64 string <code>r00AB</code>.
 If it is not base64 encoded, it will looke like something with non-printable characters, and it might include stuff like <code>/java/lang/string</code> and things like that.</p>
-<p>It might look something like this:</p>
-<pre><code>¬í..sr..LogFile×
-
-</code></pre>
-
+<p>It might look something like this:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>¬í..sr..LogFile×
+</code></pre></div></p>
 <p>You can also look for the following content-type: <code>application/x-java-serialized-object</code></p>
 <p>https://blog.netspi.com/java-deserialization-attacks-burp/</p>
 <p>Example of vulnerable servers:
@@ -207,52 +5720,46 @@ I JBoss 6.1.0 applikationer så är det sårbara URL:en <code>/invoker/JMKInvoke
 Jenkins
 Soffid IAM</p>
 <p>Serialized java objects can be found in HTTP Request parameters, view state or cookies. </p>
-<h3 id="exploit">Exploit<a class="headerlink" href="#exploit" title="Permanent link">#</a></h3>
+<h3 id="exploit">Exploit<a class="headerlink" href="#exploit" title="Permanent link">&para;</a></h3>
 <p>Okay, so you have identified where the application is receiving serialized java objects. As i mentioned before, you will only be able to exploit it if the application is compiled with classes that can cause harm. How will you know that if you are black-box testing? Well, you don't. So you just test every single payload possible.
 Luckily there are common libraries that have vulnerable classes that are known, so if the target application is compiles with those libraries it is possible to exploit.</p>
 <p>A common way to produce the exploits is by using the tool ysoserial. It can be found here:</p>
 <p>https://github.com/frohoff/ysoserial
 If you want to compile it yourself you just need to download the source-code.</p>
-<pre><code>apt install maven
-apt  install openjdk-8-jdk
-mvn clean package -DskipTests
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>apt install maven
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>apt  install openjdk-8-jdk
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>mvn clean package -DskipTests
+</code></pre></div>
 <p>Otherwise you can just download the jar-file and hope that it is not tampered with.
-You generate your payload like this:</p>
-<pre><code>java -jar ysoserial-0.0.5-all.jar Groovy1 &quot;touch /tmp/poooooowdn&quot; &gt; payload.txt
-</code></pre>
-
+You generate your payload like this:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>java -jar ysoserial-0.0.5-all.jar Groovy1 "touch /tmp/poooooowdn" &gt; payload.txt
+</code></pre></div></p>
 <p>You have to check the help section to see what payloads are avaiable.
 There is a also a burp plugin that will generate and test the payloads.</p>
 <p>Anyways, I just wanted to explain a little bit about how these payloads actually work.</p>
 <p>So, the only thing an attacker can control is which object to send, and the properties of that object.</p>
-<h1 id="php-deserialization-attacks">PHP deserialization attacks<a class="headerlink" href="#php-deserialization-attacks" title="Permanent link">#</a></h1>
+<h1 id="php-deserialization-attacks">PHP deserialization attacks<a class="headerlink" href="#php-deserialization-attacks" title="Permanent link">&para;</a></h1>
 <p>In order to turn an object into a string in PHP you can use</p>
-<pre><code>serialize()
-</code></pre>
-
-<p>This can be exmplified like this</p>
-<pre><code class="php">&lt;?php
-$the_array = array(&quot;lorem&quot;, &quot;ipsum&quot;, &quot;Dolor&quot;);
-$serialized = serialize($the_array);
-print $serialized;
-?&gt;
-</code></pre>
-
-<pre><code>// the following will be printed:
-a:3:{i:0;s:5:&quot;lorem&quot;;i:1;s:5:&quot;ipsum&quot;;i:2;s:5:&quot;Dolor&quot;}
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>serialize()
+</code></pre></div>
+<p>This can be exmplified like this
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nv">$the_array</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">"lorem"</span><span class="p">,</span> <span class="s2">"ipsum"</span><span class="p">,</span> <span class="s2">"Dolor"</span><span class="p">);</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nv">$serialized</span> <span class="o">=</span> <span class="nb">serialize</span><span class="p">(</span><span class="nv">$the_array</span><span class="p">);</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="k">print</span> <span class="nv">$serialized</span><span class="p">;</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="cp">?&gt;</span>
+</code></pre></div></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>// the following will be printed:
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>a:3:{i:0;s:5:"lorem";i:1;s:5:"ipsum";i:2;s:5:"Dolor"}
+</code></pre></div>
 <p>It is pretty simply to decode:
 array containing 3 elements <code>a:3</code>
 index 0, string with five characters, which are lorem <code>i:0;s:5:lorem</code>
 etc.</p>
 <p>Unserialize does the same thing, but the other way around. It takes serialized strings and turn them into objects.</p>
-<pre><code class="php">$theobject = unserialize('&quot;a:3:{i:0;s:5:&quot;lorem&quot;;i:1;s:5:&quot;ipsum&quot;;i:2;s:5:&quot;Dolor&quot;}');
-</code></pre>
-
-<h2 id="magic-methods">Magic methods<a class="headerlink" href="#magic-methods" title="Permanent link">#</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="x">$theobject = unserialize('"a:3:{i:0;s:5:"lorem";i:1;s:5:"ipsum";i:2;s:5:"Dolor"}');</span>
+</code></pre></div>
+<h2 id="magic-methods">Magic methods<a class="headerlink" href="#magic-methods" title="Permanent link">&para;</a></h2>
 <p>Okay, but let's say that we can send in a serialized object to have it unserialized. What can that even do? How can the code be executed?</p>
 <p>Enter PHP autoloading.
 PHP objects/classes can have methods that are automatically executed when the class is initialized.
@@ -260,34 +5767,31 @@ These automatic functions are sometimes called magic method.
 THe following are examples of some magic methods.
 Remember that there is not guarantee that a class has these magic methods. But if the class do have it they will automatically execute.</p>
 <p>So if the class has any of these methods they will be run when the class is initilized, for example by doing:</p>
-<pre><code class="php">&lt;?php
-$newinst = new LoggerClass();
-
-//Or when deserializing an object
-
-$serializedObj = serialize($newinst);
-
-unserialize($serialized)
-
-</code></pre>
-
-<pre><code>__construct()
-__destruct()
-__call()
-__callStatic()
-__get()
-__set()
-__isset()
-__unset()
-__sleep()
-__wakeup()
-__toString()
-__invoke()
-__set_state()
-__clone()
-__autoload().
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="nv">$newinst</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">LoggerClass</span><span class="p">();</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="c1">//Or when deserializing an object</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="nv">$serializedObj</span> <span class="o">=</span> <span class="nb">serialize</span><span class="p">(</span><span class="nv">$newinst</span><span class="p">);</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="nb">unserialize</span><span class="p">(</span><span class="nv">$serialized</span><span class="p">)</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>__construct()
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>__destruct()
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>__call()
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>__callStatic()
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>__get()
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>__set()
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>__isset()
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>__unset()
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>__sleep()
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>__wakeup()
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>__toString()
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>__invoke()
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>__set_state()
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>__clone()
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>__autoload().
+</code></pre></div>
 <p>The most common methods are <code>__construct</code>, <code>__destruct</code>, <code>__wakeup</code>
 However, there are many more. </p>
 <p>When you run <code>unserialize()</code> the object is instatiated. It is the same as running <code>new class()</code>.</p>
@@ -297,11 +5801,10 @@ However, there are many more. </p>
 <li>The PHP file where the unserialize-function is executed must contain a useful class, or import a class that is useful.</li>
 <li>The useful class must contain a magic function that perform the useful action, such as writing to disk.</li>
 </ol>
-<p>A common magic method is destruct. It is run when the obejct is terminated. A common usage for it, is to be used to store cache files on disk, or stuff like that. Or perform shutdown queries to a database for example.</p>
-<pre><code>__destruct()
-</code></pre>
-
-<h2 id="exploit_1">Exploit<a class="headerlink" href="#exploit_1" title="Permanent link">#</a></h2>
+<p>A common magic method is destruct. It is run when the obejct is terminated. A common usage for it, is to be used to store cache files on disk, or stuff like that. Or perform shutdown queries to a database for example.
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>__destruct()
+</code></pre></div></p>
+<h2 id="exploit_1">Exploit<a class="headerlink" href="#exploit_1" title="Permanent link">&para;</a></h2>
 <p>Exploiting PHP serialization attacks is quite difficult if you don't have access to the source code, because you don't know what classes are available.</p>
 <p>In order to exploit a PHP deserialization attack the following requirements are necessary:</p>
 <ul>
@@ -310,22 +5813,20 @@ However, there are many more. </p>
 <li>The class with the magic method needs to be included in the file where the unserialize is happening.</li>
 <li>The class must do something that can be of interest to the attacker, such as writing to disk, so you can upload a shell.</li>
 </ul>
-<h4 id="step-1-find-unserialize">Step 1 - find unserialize<a class="headerlink" href="#step-1-find-unserialize" title="Permanent link">#</a></h4>
+<h4 id="step-1-find-unserialize">Step 1 - find unserialize<a class="headerlink" href="#step-1-find-unserialize" title="Permanent link">&para;</a></h4>
 <p>Burp will look for strings that might be serialized. So check your passive scanner in burp, it says something like "Serialized object in HTTP message".</p>
 <p>Check for strings that look like this:</p>
-<pre><code>s:1:”s”;s:13:”Hi  this test  “;
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>s:1:”s”;s:13:”Hi  this test  “;
+</code></pre></div>
 <p>However, it is more likely that the serialized object is actually base64-encoded, so decode all base64-encoded data you find.</p>
 <p>With source-code:
 If you check the source-code looks for:</p>
-<pre><code>unserialize()
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>unserialize()
+</code></pre></div>
 <p>If you see that function in the source-code, look to see if user-controlled data is sent to the <code>unserialize()</code> function.</p>
 <p>Just search all the source files for <code>unserialize</code>, in wordpress it may also be called <code>maybe_unserialize</code>.</p>
 <p>Now, you also need to find out if the input parameter to unserialize can be controlled by the attacker. Find out where it comes from.</p>
-<h4 id="step-2-find-a-class-to-abuse">Step 2 - Find a class to abuse<a class="headerlink" href="#step-2-find-a-class-to-abuse" title="Permanent link">#</a></h4>
+<h4 id="step-2-find-a-class-to-abuse">Step 2 - Find a class to abuse<a class="headerlink" href="#step-2-find-a-class-to-abuse" title="Permanent link">&para;</a></h4>
 <p>Okay, so you have found a point where attacker-controlled data is sent to <code>unserialize()</code>. Now we need to find a class that is:
 - A. Contains a magic function.
 - B. Performs an action that is desirable to the attacker (such as writing to disk)
@@ -335,141 +5836,224 @@ If you check the source-code looks for:</p>
 We can start in different ends, either by searching the source-code for magic functions, or search the source-code for useful functions and hope that they are executed from a magic function.</p>
 <p><strong>A. Contains a magic function</strong></p>
 <p>Maybe start looking through the source-code for functions like:</p>
-<pre><code>__construct
-__destruct
-__wakeup
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>__construct
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>__destruct
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>__wakeup
+</code></pre></div>
 <p><strong>B. Performs an action that is desirable to the attacker</strong></p>
 <p>When you have identified a class containing a magic function you need to see if the magic function performs an action that is desirable to the attacker.
 Remember that the attacker can controll all properties in the class.
 A common function to be abused is for a class to write error messages to log files. 
 The <code>file_put_contents</code>-function could be in another function that is called from <code>__destruct</code>. An example of such a class would be the following:</p>
-<pre><code class="php">&lt;?php
-class Logger(){
-    $stringLogfile;
-    $stringLogtext;
-
-    public function __destruct()
-    {
-        file_put_contents($stringLogfile, $stringLogtext, FILE_APPEND);
-    }
-}
-?&gt;
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="k">class</span> <span class="nc">Logger</span><span class="p">(){</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>    <span class="nv">$stringLogfile</span><span class="p">;</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>    <span class="nv">$stringLogtext</span><span class="p">;</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>    <span class="k">public</span> <span class="k">function</span> <span class="fm">__destruct</span><span class="p">()</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>    <span class="p">{</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>        <span class="nb">file_put_contents</span><span class="p">(</span><span class="nv">$stringLogfile</span><span class="p">,</span> <span class="nv">$stringLogtext</span><span class="p">,</span> <span class="nx">FILE_APPEND</span><span class="p">);</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>    <span class="p">}</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="p">}</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="cp">?&gt;</span>
+</code></pre></div>
 <p>Remember that what is a desirable function may vary, of course it would be great to write to files or execute commands. But it could be any other type of action, such as deleting a file, or writing to a database. Or making a request somewhere.</p>
 <p>But here are some well known desirable functions to search for:</p>
-<pre><code>File Access:
-file_put_contents()
-file_get_contents()
-unlink()
-
-Command execution:
-exec()
-passthru()
-popen()
-system()
-
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>File Access:
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>file_put_contents()
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>file_get_contents()
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>unlink()
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>Command execution:
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>exec()
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>passthru()
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>popen()
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>system()
+</code></pre></div>
 <p><strong>C. Available to use</strong>
 Now we have identified a class which contains a Magic function that performs an action that is desirable to us, now we only need to make sure that is is available to us.
 This will require you to go from the source-file where the unserialize-function is executed backwards to see if the usable class is included. Remember that classes are included recursivly. So if your source-file your have:</p>
-<pre><code class="php">&lt;?php
-//My vulnerable class
-include_once(&quot;someotherclass.php&quot;)
-
-
-unserialize($COOKIE-&gt;&quot;USER&quot;)
-?&gt;
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="c1">//My vulnerable class</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="k">include_once</span><span class="p">(</span><span class="s2">"someotherclass.php"</span><span class="p">)</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="nb">unserialize</span><span class="p">(</span><span class="nv">$COOKIE</span><span class="o">-&gt;</span><span class="s2">"USER"</span><span class="p">)</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="cp">?&gt;</span>
+</code></pre></div>
 <p>You need to check out <code>someotherclass.php</code></p>
-<pre><code class="php">&lt;?php
-//someotherclass.php
-
-require(&quot;moreclasses.php&quot;)
-include_once(&quot;evenmoreclasses.php&quot;)
-?&gt;
-</code></pre>
-
-<pre><code class="php">&lt;?php
-//moreclasses.php
-?&gt;
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="c1">//someotherclass.php</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="k">require</span><span class="p">(</span><span class="s2">"moreclasses.php"</span><span class="p">)</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="k">include_once</span><span class="p">(</span><span class="s2">"evenmoreclasses.php"</span><span class="p">)</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="cp">?&gt;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="c1">//moreclasses.php</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="cp">?&gt;</span>
+</code></pre></div>
 <p>If you don't feel like doing this type of analysis, you can just hope that all files are included, something which is not uncommon, and just run your exploit and hope for the best.</p>
 <p><strong>D. Build payload</strong></p>
 <p>It is a tedious work to actaully build the serialized string by hand. So a better way is to have PHP do it. Just copy the entire class, edit the properties that you need to use, serialize it and then base64-encode it, if that is required. If you get errors when you serialize the class it might be because the code is referencing other classes, you can sometimes fix this simply by removing that code.</p>
 <p>Here is an example of a class, and how to produce a serialized object of it.
 REMEBER to URL encode the payload before you send it, or base64-encode it if that is required:</p>
-<pre><code class="php">// testfil.php
-&lt;?php
-class JustTesting {
-    var $file = &quot;/path/to/file.php&quot;;
-    public function __destruct(){
-        echo file_get_contents($this-&gt;file, TRUE);
-    }
-}
-
-$newTest = new JustTesting();
-
-echo serialize($newTest);
-?&gt;
-</code></pre>
-
-<pre><code class="bash">apt install php-cli
-
-php -f testfil.php
-</code></pre>
-
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="x">// testfil.php</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="cp">&lt;?php</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="k">class</span> <span class="nc">JustTesting</span> <span class="p">{</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>    <span class="k">var</span> <span class="nv">$file</span> <span class="o">=</span> <span class="s2">"/path/to/file.php"</span><span class="p">;</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>    <span class="k">public</span> <span class="k">function</span> <span class="fm">__destruct</span><span class="p">(){</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>        <span class="k">echo</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">file</span><span class="p">,</span> <span class="k">TRUE</span><span class="p">);</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>    <span class="p">}</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="p">}</span>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="nv">$newTest</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">JustTesting</span><span class="p">();</span>
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="k">echo</span> <span class="nb">serialize</span><span class="p">(</span><span class="nv">$newTest</span><span class="p">);</span>
+<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="cp">?&gt;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>apt<span class="w"> </span>install<span class="w"> </span>php-cli
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>php<span class="w"> </span>-f<span class="w"> </span>testfil.php
+</code></pre></div>
 <p>Now you just copy the payload and send it in.</p>
-<h4 id="blackbox">Blackbox<a class="headerlink" href="#blackbox" title="Permanent link">#</a></h4>
+<h4 id="blackbox">Blackbox<a class="headerlink" href="#blackbox" title="Permanent link">&para;</a></h4>
 <p>So, as an attacker you can't know what classes are included, what classes are available to you.
 However, if the application is built using framework. Such as composer, composer will include all all composer libraries. So you might find a class from any of those libraries.</p>
 <p>See this: https://insomniasec.com/downloads/publications/Practical%20PHP%20Object%20Injection.pdf</p>
 
-  <br>
-    
 
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../cross_site_web_socket_hijack/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Cross-Site Web Socket Hijack (CSHSH)">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Cross-Site Web Socket Hijack (CSHSH)
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../dom_based_xss/" class="md-footer__link md-footer__link--next" aria-label="Next: DOM XSS">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                DOM XSS
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Taha Gandhi &middot; <a href="https://gandhi-taha.github.io/">gandhi-taha.github.io</a>
+    </div>
+  
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
     
     
       
+      
     
-
-  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    <a href="https://www.linkedin.com/in/t4gandhi" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
     
-    <div class="wm-article-nav pull-right">
-      <a href="../dom_based_xss/" class="btn btn-xs btn-default pull-right">
-        Next
-        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-      </a>
-      <a href="../dom_based_xss/" class="btn btn-xs btn-link">
-        DOM XSS
-      </a>
-    </div>
     
-    <div class="wm-article-nav">
-      <a href="../cross_site_web_socket_hijack/" class="btn btn-xs btn-default pull-left">
-        <i class="fa fa-chevron-left" aria-hidden="true"></i>
-        Previous</a><a href="../cross_site_web_socket_hijack/" class="btn btn-xs btn-link">
-        Cross-Site Web Socket Hijack (CSHSH)
-      </a>
-    </div>
     
-  </div>
-
-    <br>
+    
+      
+      
+    
+    <a href="https://github.com/gandhi-taha" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://gandhi-taha.github.io/" target="_blank" rel="noopener" title="gandhi-taha.github.io" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1v16.2c0 22.1-17.9 40-40 40h-16c-1.1 0-2.2 0-3.3-.1-1.4.1-2.8.1-4.2.1L416 512h-24c-22.1 0-40-17.9-40-40v-88c0-17.7-14.3-32-32-32h-64c-17.7 0-32 14.3-32 32v88c0 22.1-17.9 40-40 40h-55.9c-1.5 0-3-.1-4.5-.2-1.2.1-2.4.2-3.6.2h-16c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9.1-2.8v-69.7h-32c-18 0-32-14-32-32.1 0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7l255.4 224.5c8 7 12 15 11 24"/></svg>
+    </a>
+  
 </div>
-
-<footer class="container-fluid wm-page-content">
-      <p>
-        <a href="https://github.com/gandhi-taha/edit/master/docs/attacking_web_applications/deserialization_attacks.md"><i class="fa fa-github"></i>
-Edit on GitHub</a>
-      </p>
-  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+      
+    </div>
+  </div>
 </footer>
-
-</body>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.sections", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.525ec568.min.js"></script>
+      
+    
+  </body>
 </html>

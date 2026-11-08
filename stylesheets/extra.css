@@ -1,0 +1,15 @@
+:root{
+  --md-primary-fg-color:#17181a;
+  --md-primary-fg-color--light:#3a3c40;
+  --md-primary-fg-color--dark:#000;
+  --md-accent-fg-color:#2d5be3;
+  --md-default-bg-color:#fbfaf7;
+  --md-typeset-a-color:#2d5be3;
+}
+.md-header{background:#17181a}
+.md-tabs{background:#17181a}
+.md-typeset h1{font-weight:700;letter-spacing:-.02em;color:#17181a}
+.md-typeset h2{font-weight:650;letter-spacing:-.01em}
+.md-typeset table:not([class]){font-size:.72rem;border-radius:10px}
+.md-typeset .admonition,.md-typeset details{border-radius:10px}
+.md-nav__title{font-weight:650}
